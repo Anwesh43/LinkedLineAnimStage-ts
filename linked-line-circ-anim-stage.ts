@@ -75,3 +75,51 @@ class LCAnimator {
         }
     }
 }
+
+class LCNode {
+
+    next : LCNode
+
+    prev : LCNode
+
+    state : LCState = new LCState()
+
+    constructor(private i : number) {
+        this.addNeighbor()
+    }
+
+    addNeighbor() {
+        if (this.i < nodes - 1) {
+            this.next = new LCNode(this.i + 1)
+            this.next.prev = this
+        }
+    }
+
+    update(stopcb : Function) {
+        this.state.update(stopcb)
+    }
+
+    startUpdating(startcb : Function) {
+        this.state.startUpdating(startcb)
+    }
+
+    draw(context : CanvasRenderingContext2D) {
+        const index : number = this.i % 2
+        const gap : number = w / nodes
+        const r : number = gap / 5
+        context.lineCap = 'round'
+        context.lineWidth = gap / 20
+        context.strokeStyle = '#673AB7'
+        context.fillStyle = '#673AB7'
+        context.save()
+        context.translate(this.i * gap + gap * this.state.scales[0], h / 2)
+        context.beginPath()
+        context.arc(0, 0, r * (1 - this.state.scales[1]) + r * this.state.scales[2], 0, 2 * Math.PI)
+        context.fill()
+        context.beginPath()
+        context.moveTo(0, 0)
+        context.lineTo(0, h/5 * (1 - 2 * index) * this.state.scales[1] * (1 - this.state.scales[2]))
+        context.stroke()
+        context.restore()
+    }
+}
