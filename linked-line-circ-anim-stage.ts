@@ -137,3 +137,27 @@ class LCNode {
         return this
     }
 }
+
+class LinkedCircLine {
+
+    dir : number = 1
+
+    curr : LCNode = new LCNode(0)
+
+    draw(context) {
+        this.curr.draw(context)
+    }
+
+    update(stopcb : Function) {
+        this.curr.update(() => {
+            this.curr = this.curr.getNext(this.dir, () => {
+                this.dir *= -1
+            })
+            stopcb()
+        })
+    }
+
+    startUpdating(startcb : Function) {
+        this.curr.startUpdating(startcb)
+    }
+}
