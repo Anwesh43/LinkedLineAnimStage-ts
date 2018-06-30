@@ -65,6 +65,7 @@ class LCState {
                 this.j -= this.dir
                 this.dir = 0
                 this.prevScale = this.scales[this.j]
+                stopcb()
             }
         }
     }
@@ -130,7 +131,7 @@ class LCNode {
     draw(context : CanvasRenderingContext2D) {
         const index : number = this.i % 2
         const gap : number = w / nodes
-        const r : number = gap / 5
+        const r : number = gap / 12
         context.lineCap = 'round'
         context.lineWidth = gap / 20
         context.strokeStyle = '#673AB7'
@@ -142,7 +143,7 @@ class LCNode {
         context.fill()
         context.beginPath()
         context.moveTo(0, 0)
-        context.lineTo(0, h/5 * (1 - 2 * index) * this.state.scales[1] * (1 - this.state.scales[2]))
+        context.lineTo(0, -h/3 * (1 - 2 * index) * this.state.scales[1] * (1 - this.state.scales[2]))
         context.stroke()
         context.restore()
     }
@@ -152,6 +153,7 @@ class LCNode {
         if (dir == 1) {
             curr = this.next
         }
+        console.log(curr)
         if (curr) {
             return curr
         }
