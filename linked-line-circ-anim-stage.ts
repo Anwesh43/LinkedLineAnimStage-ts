@@ -38,6 +38,12 @@ class LinkedLineCircStage {
             })
         }
     }
+
+    static init() {
+        const stage : LinkedLineCircStage = new LinkedLineCircStage()
+        stage.render()
+        stage.handleTap()
+    }
 }
 
 class LCState {
