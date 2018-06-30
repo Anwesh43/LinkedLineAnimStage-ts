@@ -5,6 +5,10 @@ class LinkedLineCircStage {
 
     context : CanvasRenderingContext2D
 
+    lcl : LinkedCircLine = new LinkedCircLine()
+
+    animator : LCAnimator = new LCAnimator()
+
     constructor() {
         this.initCanvas()
     }
@@ -19,6 +23,20 @@ class LinkedLineCircStage {
     render() {
         this.context.fillStyle = '#212121'
         this.context.fillRect(0, 0, w, h)
+        this.lcl.draw(this.context)
+    }
+
+    handleTap() {
+        this.canvas.onmousedown = () => {
+            this.lcl.startUpdating(() => {
+                this.animator.start(() => {
+                    this.render()
+                    this.lcl.update(() => {
+                        this.animator.stop()
+                    })
+                })
+            })
+        }
     }
 }
 
