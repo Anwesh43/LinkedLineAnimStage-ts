@@ -122,4 +122,18 @@ class LCNode {
         context.stroke()
         context.restore()
     }
+
+    getNext(dir : number, cb : Function) : LCNode {
+        var curr : LCNode = this.prev
+        if (dir == 1) {
+            curr = this.next
+        }
+        if (curr) {
+            return curr
+        }
+        if (cb) {
+            cb()
+        }
+        return this
+    }
 }
